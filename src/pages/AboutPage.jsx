@@ -19,7 +19,7 @@ export default function AboutPage() {
           About Me
         </h1>
         <p style={{ color: '#ccc', fontSize: '16px', lineHeight: '1.6' }}>
-          I'm Jeremiah, an interaction designer and motion designer passionate about creating 
+          I'm Jeremiahs, an interaction designer and motion designer passionate about creating 
           intuitive and delightful digital experiences.
         </p>
       </div>
