@@ -1,0 +1,8 @@
+# Node dependencies
+node_modules/
+
+# Vite build output
+dist/
+
+# Optional: Mac系统的隐藏文件
+.DS_Store
