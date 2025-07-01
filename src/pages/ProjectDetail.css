@@ -88,7 +88,11 @@
 }
 
 .project-detail .showcase {
-    padding: 50px 0;
+    /* padding: 50px 0; */
+}
+
+.project-detail .showcase:first-of-type {
+    margin-top: 50px;
 }
 
 .project-detail .video-section {
@@ -99,7 +103,7 @@
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: 24px;
-    margin-bottom: 50px;
+    margin-bottom: 0;
 }
 
 /* First row: 3 videos (each spans 2 columns) */
@@ -122,47 +126,47 @@
     grid-column: span 2;
 }
 
-/* Fourth row: 1 full-width video (icons) */
-.project-detail .video-grid .video-section:nth-child(9) {
+/* Icons Animation (now first video in second section) - Full width */
+.project-detail .showcase:nth-of-type(3) .video-grid .video-section:nth-child(1) {
     grid-column: 1 / -1;
 }
 
-.project-detail .video-grid .video-section:nth-child(9) .video-container-card {
+.project-detail .showcase:nth-of-type(3) .video-grid .video-section:nth-child(1) .video-container-card {
     background: transparent;
     padding: 0;
 }
 
-.project-detail .video-grid .video-section:nth-child(9) .demo-video-clean {
+.project-detail .showcase:nth-of-type(3) .video-grid .video-section:nth-child(1) .demo-video-clean {
     max-width: 100%;
     aspect-ratio: 16/9;
     border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-/* Fifth row: 2 portrait videos (AI concept videos) */
-.project-detail .video-grid .video-section:nth-child(10),
-.project-detail .video-grid .video-section:nth-child(11) {
+/* AI concept videos (now 2nd and 3rd in second section) */
+.project-detail .showcase:nth-of-type(3) .video-grid .video-section:nth-child(2),
+.project-detail .showcase:nth-of-type(3) .video-grid .video-section:nth-child(3) {
     grid-column: span 3;
 }
 
-.project-detail .video-grid .video-section:nth-child(10) .demo-video-clean,
-.project-detail .video-grid .video-section:nth-child(11) .demo-video-clean {
+.project-detail .showcase:nth-of-type(3) .video-grid .video-section:nth-child(2) .demo-video-clean,
+.project-detail .showcase:nth-of-type(3) .video-grid .video-section:nth-child(3) .demo-video-clean {
     aspect-ratio: 1/1;
     max-width: 300px;
     margin: 0 auto;
 }
 
-/* Sixth row: 1 full-width video (weather) */
-.project-detail .video-grid .video-section:nth-child(12) {
+/* Weather Interface (now 4th video in second section) - Full width */
+.project-detail .showcase:nth-of-type(3) .video-grid .video-section:nth-child(4) {
     grid-column: 1 / -1;
 }
 
-.project-detail .video-grid .video-section:nth-child(12) .video-container-card {
+.project-detail .showcase:nth-of-type(3) .video-grid .video-section:nth-child(4) .video-container-card {
     background: transparent;
     padding: 0;
 }
 
-.project-detail .video-grid .video-section:nth-child(12) .demo-video-clean {
+.project-detail .showcase:nth-of-type(3) .video-grid .video-section:nth-child(4) .demo-video-clean {
     max-width: 100%;
     aspect-ratio: 16/9;
     border-radius: 12px;
@@ -213,6 +217,65 @@
 /* Special styling for ultra-wide videos like autoaciy (2880x926 ≈ 3.1:1) */
 .project-detail .video-grid.single-video .demo-video-clean[src*="autoaciy"] {
     aspect-ratio: 3.1/1;
+}
+
+/* Fling Animation Section */
+.project-detail .fling-section {
+    padding: 0 0 50px 0;
+}
+
+.project-detail .fling-container {
+    width: 100%;
+    background: #141517;
+    border-radius: 12px;
+    padding: 50px 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+}
+
+.project-detail .fling-video-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.project-detail .fling-video-label {
+    font-size: 12px;
+    color: #ccc;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.project-detail .fling-video {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    aspect-ratio: 9/19.5;
+    border-radius: 12px;
+    display: block;
+    object-fit: cover;
+    pointer-events: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.project-detail .fling-video::-webkit-media-controls {
+    display: none !important;
+}
+
+.project-detail .fling-video::-moz-media-controls {
+    display: none !important;
+}
+
+.project-detail .fling-video::-ms-media-controls {
+    display: none !important;
 }
 
 .project-detail .video-container-card {
@@ -316,6 +379,21 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    filter: blur(8px);
+    transition: filter 0.8s ease-in-out;
+}
+
+.project-detail .demo-video-clean.loaded {
+    filter: blur(0px);
+}
+
+.project-detail .fling-video {
+    filter: blur(8px);
+    transition: filter 0.8s ease-in-out;
+}
+
+.project-detail .fling-video.loaded {
+    filter: blur(0px);
 }
 
 /* Responsive Design */
@@ -378,5 +456,29 @@
     .project-detail .close-button svg {
         width: 18px;
         height: 18px;
+    }
+    
+    /* Fling videos responsive */
+    .project-detail .fling-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 40px 30px;
+    }
+    
+    .project-detail .fling-video {
+        max-width: 240px;
+    }
+    
+    /* Fix single-video containers on mobile */
+    .project-detail .video-grid.single-video .video-container-card {
+        background: #141517;
+        padding: 30px 20px;
+        border-radius: 12px;
+    }
+    
+    .project-detail .video-grid.single-video .demo-video-clean {
+        aspect-ratio: 16/9;
+        max-width: 100%;
+        min-height: 200px;
     }
 }

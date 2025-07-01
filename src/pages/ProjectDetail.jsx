@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import VideoPlayer from '../components/VideoPlayer';
 import videoMP4 from '../assets/videos/video.mp4';
 import aicyMP4 from '../assets/videos/aicy.mp4';
 import aicyuiMP4 from '../assets/videos/aicyui.mp4';
@@ -20,6 +21,8 @@ import arMP4 from '../assets/videos/ar.mp4';
 import arcommentsMP4 from '../assets/videos/arcomments.mp4';
 import armutiblesstateMP4 from '../assets/videos/armutiblesstate.mp4';
 import arwithmusicMP4 from '../assets/videos/arwithmusic.mp4';
+import filingMP4 from '../assets/videos/filing.mp4';
+import filingexampleMP4 from '../assets/videos/filingexample.mp4';
 import './ProjectDetail.css';
 
 export default function ProjectDetail() {
@@ -277,20 +280,56 @@ export default function ProjectDetail() {
             transition={{ delay: 0.5, duration: 0.8 }}
           >
             <div className="video-grid">
-              {mobileInterfaceProject.videos.map((video, index) => (
+              {mobileInterfaceProject.videos.slice(0, 8).map((video, index) => (
                 <div key={index} className="video-section">
                   <div className="section-label">{video.label}</div>
                   <div className="video-container-card">
-                    <video 
-                      className="demo-video-clean" 
-                      autoPlay 
-                      muted 
-                      loop 
-                      playsInline
-                    >
-                      <source src={video.src} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
+                    <VideoPlayer src={video.src} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.section>
+
+          {/* Fling Animation Section */}
+          <motion.section 
+            className="showcase fling-section"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+          >
+            <div className="section-label">Jetpack Compose Fling Interactions</div>
+            <div className="fling-container">
+              <div className="fling-video-item">
+                <div className="fling-video-label">Fling Animation (Jetpack Compose)</div>
+                <VideoPlayer 
+                  src={filingMP4}
+                  className="fling-video"
+                />
+              </div>
+              <div className="fling-video-item">
+                <div className="fling-video-label">Fling Interaction Example</div>
+                <VideoPlayer 
+                  src={filingexampleMP4}
+                  className="fling-video"
+                />
+              </div>
+            </div>
+          </motion.section>
+
+          {/* Remaining Videos */}
+          <motion.section 
+            className="showcase"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7, duration: 0.8 }}
+          >
+            <div className="video-grid">
+              {mobileInterfaceProject.videos.slice(8).map((video, index) => (
+                <div key={index + 8} className="video-section">
+                  <div className="section-label">{video.label}</div>
+                  <div className="video-container-card">
+                    <VideoPlayer src={video.src} />
                   </div>
                 </div>
               ))}
@@ -390,16 +429,7 @@ export default function ProjectDetail() {
                 <div key={index} className="video-section">
                   <div className="section-label">{video.label}</div>
                   <div className="video-container-card">
-                    <video 
-                      className="demo-video-clean" 
-                      autoPlay 
-                      muted 
-                      loop 
-                      playsInline
-                    >
-                      <source src={video.src} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
+                    <VideoPlayer src={video.src} />
                   </div>
                 </div>
               ))}
@@ -498,16 +528,7 @@ export default function ProjectDetail() {
                 <div key={index} className="video-section">
                   <div className="section-label">{video.label}</div>
                   <div className="video-container-card">
-                    <video 
-                      className="demo-video-clean" 
-                      autoPlay 
-                      muted 
-                      loop 
-                      playsInline
-                    >
-                      <source src={video.src} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
+                    <VideoPlayer src={video.src} />
                   </div>
                 </div>
               ))}
@@ -606,18 +627,7 @@ export default function ProjectDetail() {
                 <div key={index} className="video-section">
                   <div className="section-label">{video.label}</div>
                   <div className="video-container-card">
-                    <video 
-                      className="demo-video-clean" 
-                      autoPlay 
-                      muted 
-                      loop 
-                      playsInline
-                      preload="auto"
-                      controls={false}
-                    >
-                      <source src={video.src} type="video/mp4" />
-                      Your browser does not support the video tag.
-                    </video>
+                    <VideoPlayer src={video.src} controls={false} />
                   </div>
                 </div>
               ))}
