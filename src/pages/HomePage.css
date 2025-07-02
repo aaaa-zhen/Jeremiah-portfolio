@@ -232,7 +232,6 @@
 }
 
 .flyme {
-    aspect-ratio: 2/1;
 }
 
 .cover {
@@ -295,13 +294,13 @@
     }
     
     .flyme {
-        aspect-ratio: 1.6;
-        min-height: clamp(160px, 25vh, 220px);
+        aspect-ratio: 1.2 !important;
+        height: auto !important;
+        min-height: clamp(180px, 25vh, 250px) !important;
     }
 
     .portfolio-content {
         padding: clamp(20px, 5vw, 28px);
-        min-height: clamp(160px, 25vh, 220px);
     }
     
     .portfolio-item.square {
