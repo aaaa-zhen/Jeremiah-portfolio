@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import './HomePage.css';
 import phoneImage from '../assets/images/flymeos.png';
@@ -12,6 +12,20 @@ import uilabImage from '../assets/images/uilab.png';
 
 export default function HomePage() {
   const navigate = useNavigate();
+  // 移除hover状态管理，使用固定3x3网格
+
+  // 创建3x3项目数据
+  const projects = [
+    { id: 1, title: 'Mobile Interface', slug: 'mobile-interface', color: '#FF6B6B', image: phoneImage, isClean: false },
+    { id: 2, title: 'Smart Glasses', slug: 'smart-glasses', color: '#4ECDC4', image: glassesImage, isClean: false },
+    { id: 3, title: 'Flyme Watch', slug: 'flyme-watch', color: '#45B7D1', video: watchVideo, isClean: false, hasBackground: false },
+    { id: 4, title: 'Flyme Auto', slug: 'flyme-auto', color: '#96CEB4', image: flymeAutoImage, isClean: false },
+    { id: 5, title: '智己汽车', slug: 'cover-design', color: '#000000', image: coverImage, isClean: false },
+    { id: 6, title: 'Live APP', slug: 'live-app', color: '#DDA0DD', image: liveAppImage, isClean: false },
+    { id: 7, title: 'UILAB Design', slug: 'uilab-design', color: '#98D8C8', image: uilabImage, isClean: false },
+    { id: 8, title: 'Coming Soon', slug: '#', color: '#F7DC6F', isClean: false, hasBackground: true },
+    { id: 9, title: 'Coming Soon', slug: '#', color: '#BB8FCE', isClean: false, hasBackground: true },
+  ];
 
   useEffect(() => {
     // Ensure page starts at top on every load/refresh
@@ -36,8 +50,12 @@ export default function HomePage() {
   }, []);
 
   const handleProjectClick = (projectSlug) => {
-    navigate(`/projects/${projectSlug}`);
+    if (projectSlug !== '#') {
+      navigate(`/projects/${projectSlug}`);
+    }
   };
+
+  // 固定的3x3网格，无变形效果
 
   return (
     <motion.div 
@@ -86,105 +104,142 @@ export default function HomePage() {
           <p className="subtitle" data-text-delay>A selection of interaction works from 2018–2025, exploring interface, product, and playful digital storytelling.</p>
         </header>
 
-        {/* Portfolio Grid */}
+        {/* Dynamic 3x3 Portfolio Grid */}
         <section className="portfolio" data-delay style={{'--delay': 3}}>
-          <div className="portfolio-grid">
-            <div className="portfolio-item phone square" data-delay style={{'--delay': 4}} onClick={() => handleProjectClick('mobile-interface')}>
-              <img src={phoneImage} alt="Mobile Interface" className="portfolio-image" />
-              <div className="portfolio-content">
-                <div className="portfolio-text">
-                  <h3 className="portfolio-title">Mobile Interface</h3>
-                  <p className="portfolio-description">iOS interface design system</p>
-                  <p className="portfolio-year">2021-2024</p>
-                </div>
-              </div>
-            </div>
+          <div 
+            className="dynamic-grid"
+            style={{
+              display: "grid",
+              gridTemplateRows: "repeat(3, minmax(0, 1fr))",
+              gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+              gap: "24px",
+              width: "100%",
+              maxWidth: "1160px",
+              margin: "0 auto"
+            }}
+          >
+            {projects.map((project) => (
+              <motion.div
+                key={project.id}
+                className="grid-item"
+                style={{
+                  backgroundColor: project.hasBackground ? project.color : 'transparent',
+                  borderRadius: "6px",
+                  overflow: "hidden",
+                  cursor: "pointer",
+                  position: "relative",
+                  border: (project.slug === 'flyme-watch') ? 'none' : 'none',
+                  aspectRatio: "1 / 1",
+                  width: "100%"
+                }}
+                onClick={() => handleProjectClick(project.slug)}
+                whileHover={{ 
+                  scale: 1.05,
+                  transition: { 
+                    type: "spring", 
+                    stiffness: 300, 
+                    damping: 25 
+                  }
+                }}
+              >
+                {/* 背景媒体 */}
+                {project.video ? (
+                  <video 
+                    src={project.video} 
+                    className="media-background" 
+                    autoPlay 
+                    muted 
+                    loop 
+                    playsInline
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      zIndex: 1
+                    }}
+                  />
+                ) : project.image ? (
+                  <img 
+                    src={project.image} 
+                    alt={project.title} 
+                    className="media-background"
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      zIndex: 1
+                    }}
+                  />
+                ) : null}
+                
+                {/* hover时的遮罩层 - Cover除外 */}
+                {project.slug !== 'cover-design' && (
+                  <div 
+                    className="hover-overlay"
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      background: project.hasBackground ? 
+                        "linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 50%, transparent 100%)" :
+                        "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)",
+                      zIndex: 2,
+                      opacity: 0,
+                      transition: "opacity 0.3s ease"
+                    }}
+                  />
+                )}
+                
+                {/* Cover项目的特殊遮罩层 */}
+                {project.slug === 'cover-design' && (
+                  <div 
+                    className="hover-overlay"
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      background: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 50%, transparent 100%)",
+                      zIndex: 2,
+                      opacity: 0,
+                      transition: "opacity 0.3s ease"
+                    }}
+                  />
+                )}
 
-            <div className="portfolio-item glasses square" data-delay style={{'--delay': 5}} onClick={() => handleProjectClick('smart-glasses')}>
-              <img src={glassesImage} alt="Smart Glasses" className="portfolio-image" />
-              <div className="portfolio-content">
-                <div className="portfolio-text">
-                  <h3 className="portfolio-title">Smart Glasses</h3>
-                  <p className="portfolio-description">AR interface exploration</p>
-                  <p className="portfolio-year">2022-2023</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="portfolio-item watch square" data-delay style={{'--delay': 6}} onClick={() => handleProjectClick('flyme-watch')}>
-              <video 
-                src={watchVideo} 
-                className="portfolio-image" 
-                autoPlay 
-                muted 
-                loop 
-                playsInline
-              />
-              <div className="portfolio-content">
-                <div className="portfolio-text">
-                  <h3 className="portfolio-title">Flyme Watch</h3>
-                  <p className="portfolio-description">Watch OS motion design</p>
-                  <p className="portfolio-year">2022-2023</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="portfolio-item flyme" data-delay style={{'--delay': 7}} onClick={() => handleProjectClick('flyme-auto')}>
-              <img src={flymeAutoImage} alt="Flyme Auto" className="portfolio-image" />
-              <div className="portfolio-content">
-                <div className="portfolio-text">
-                  <h3 className="portfolio-title">Flyme Auto</h3>
-                  <p className="portfolio-description">Automotive interface system</p>
-                  <p className="portfolio-year">2023-2024</p>
-                </div>
-              </div>
-            </div>
-
-            <motion.div 
-              className="portfolio-item cover square" 
-              data-delay 
-              style={{'--delay': 8}} 
-              onClick={() => handleProjectClick('cover-design')}
-              whileHover={{ 
-                scale: 1.05,
-                transition: { 
-                  type: "spring", 
-                  stiffness: 200, 
-                  damping: 20 
-                }
-              }}
-            >
-              <img src={coverImage} alt="Cover Design" className="portfolio-image" />
-              <div className="portfolio-content">
-                <div className="portfolio-text">
-                  <h3 className="portfolio-title">Cover Design</h3>
-                  <p className="portfolio-description">Visual identity exploration</p>
-                  <p className="portfolio-year">2024-2025</p>
-                </div>
-              </div>
-            </motion.div>
-
-            <div className="portfolio-item live square" data-delay style={{'--delay': 9}} onClick={() => handleProjectClick('live-app')}>
-              <img src={liveAppImage} alt="Live APP" className="portfolio-image" />
-              <div className="portfolio-content">
-                <div className="portfolio-text">
-                  <h3 className="portfolio-title">Live APP</h3>
-                  <p className="portfolio-description">Social streaming platform</p>
-                  <p className="portfolio-year">2019-2020</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="portfolio-item uilab" data-delay style={{'--delay': 10}} onClick={() => handleProjectClick('uilab-design')}>
-              <img src={uilabImage} alt="UILAB Design Studio" className="portfolio-image" />
-              <div className="portfolio-content">
-                <div className="portfolio-text">
-                  <h3 className="portfolio-title">UILAB Design Studio</h3>
-                  <p className="portfolio-description">Design system and branding</p>
-                  <p className="portfolio-year">2018-2019</p>
-                </div>
-              </div>
-            </div>
+                {/* 项目标题 - hover时显示 */}
+                {project.title && (
+                  <div 
+                    className="project-title"
+                    style={{
+                      position: "absolute",
+                      bottom: "20px",
+                      left: "20px",
+                      right: "20px",
+                      zIndex: 3,
+                      color: "white",
+                      fontWeight: "600",
+                      fontSize: "clamp(14px, 2vw, 18px)",
+                      textShadow: "0 2px 4px rgba(0,0,0,0.5)",
+                      opacity: 0,
+                      transform: "translateY(10px)",
+                      transition: "all 0.3s ease"
+                    }}
+                  >
+                    {project.title}
+                  </div>
+                )}
+              </motion.div>
+            ))}
           </div>
         </section>
       </motion.div>

@@ -68,28 +68,39 @@
     padding: clamp(25px, 5vh, 35px) 0 clamp(60px, 10vh, 80px);
 }
 
-.portfolio-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto auto auto;
-    gap: clamp(16px, 3vw, 24px);
-    grid-template-areas: 
-        "phone glasses watch"
-        "flyme flyme cover"
-        "live uilab uilab";
+/* Dynamic 3x3 Grid */
+.dynamic-grid {
+    position: relative;
     width: 100%;
-    max-width: 1160px;
-    margin: 0 auto;
 }
 
-.portfolio-item {
-    border-radius: 6px;
-    overflow: hidden;
-    cursor: pointer;
+.grid-item {
     transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    position: relative;
-    background: #111;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    aspect-ratio: 1 / 1;
+    width: 100%;
+    height: auto; /* 高度跟随宽度 */
+}
+
+/* Hover效果 */
+.grid-item:hover .project-title {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+.grid-item:hover .hover-overlay {
+    opacity: 1 !important;
+}
+
+/* 移除了Flyme Watch特殊样式 */
+
+/* 旧的portfolio-grid样式 - 暂时保留以防需要回滚 */
+.portfolio-grid {
+    display: none; /* 隐藏旧的网格 */
+}
+
+/* 旧的portfolio-item样式 - 已被dynamic-grid替代 */
+.portfolio-item {
+    display: none;
 }
 
 .portfolio-image {
@@ -279,6 +290,31 @@
         margin-bottom: clamp(16px, 4vw, 20px);
     }
 
+    /* Dynamic Grid Mobile */
+    .dynamic-grid {
+        height: auto !important;
+        grid-template-columns: 1fr !important;
+        grid-template-rows: repeat(9, minmax(120px, 1fr)) !important;
+        gap: clamp(12px, 4vw, 16px) !important;
+    }
+    
+    .grid-item {
+        border-radius: clamp(4px, 1.5vw, 8px);
+        min-height: clamp(120px, 20vh, 160px);
+    }
+    
+    .grid-item:hover {
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 
+            0 8px 16px rgba(0,0,0,0.2),
+            0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .grid-item:hover .media-background {
+        transform: scale(1.02);
+    }
+
+    /* Legacy grid for fallback */
     .portfolio-grid {
         grid-template-columns: 1fr;
         grid-template-areas: 

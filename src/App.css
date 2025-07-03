@@ -59,30 +59,11 @@ a, button, [role="button"], .portfolio-item, .dock-item {
   letter-spacing: 0.01em;
 }
 
-/* Custom Cursor */
-.custom-cursor {
-  position: fixed;
-  width: 30px;
-  height: 30px;
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  box-shadow: 
-    0 4px 16px rgba(0, 0, 0, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
+/* Custom Cursor removed - using liquid glass cursor instead */
 
 @media (hover: none) and (pointer: coarse) {
   body {
     cursor: auto;
-  }
-  
-  .custom-cursor {
-    display: none;
   }
   
   a, button, [role="button"], .portfolio-item, .dock-item {

@@ -35,57 +35,7 @@ function AnimatedRoutes() {
   );
 }
 
-function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
-
-  useEffect(() => {
-    const updateMousePosition = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    const handleMouseEnter = (e) => {
-      if (e.target.matches('a, button, [role="button"], .portfolio-item, .dock-item')) {
-        setIsHovering(true);
-      }
-    };
-
-    const handleMouseLeave = (e) => {
-      if (e.target.matches('a, button, [role="button"], .portfolio-item, .dock-item')) {
-        setIsHovering(false);
-      }
-    };
-
-    document.addEventListener('mousemove', updateMousePosition);
-    document.addEventListener('mouseenter', handleMouseEnter, true);
-    document.addEventListener('mouseleave', handleMouseLeave, true);
-
-    return () => {
-      document.removeEventListener('mousemove', updateMousePosition);
-      document.removeEventListener('mouseenter', handleMouseEnter, true);
-      document.removeEventListener('mouseleave', handleMouseLeave, true);
-    };
-  }, []);
-
-  return (
-    <motion.div
-      className="custom-cursor"
-      style={{
-        left: mousePosition.x,
-        top: mousePosition.y,
-      }}
-      animate={{
-        scale: isHovering ? 1.5 : 1,
-      }}
-      transition={{
-        type: "spring",
-        stiffness: 300,
-        damping: 30,
-        mass: 0.8
-      }}
-    />
-  );
-}
+// CustomCursor removed - using liquid glass cursor instead
 
 function App() {
   useEffect(() => {
@@ -99,7 +49,6 @@ function App() {
   return (
     <Router>
       <div className="app">
-        <CustomCursor />
         <AnimatedRoutes />
         <BottomNav />
       </div>
