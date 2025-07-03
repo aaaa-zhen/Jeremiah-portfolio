@@ -139,10 +139,10 @@ export default function ProjectDetail() {
     description: "Focused on creating intuitive AR interface concepts and developing a web-based 3D preview platform. This project involved conceptual design work and building tools to help developers and visual designers collaborate more effectively through OBJ model uploads, 3D previews, and animation creation.",
     meta: "AR CONCEPT, WEB DEVELOPMENT",
     videos: [
-      {
-        label: "AR Interface Demo",
-        src: arMP4
-      },
+      // {
+      //   label: "AR Interface Demo",
+      //   src: arMP4
+      // },
       {
         label: "AR Comments System",
         src: arcommentsMP4
